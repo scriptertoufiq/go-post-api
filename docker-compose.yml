@@ -1,0 +1,15 @@
+version : '3'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db-go-tweets
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_USER: go_tweets_user
+      MYSQL_ROOT_PASSWORD: superSecret
+      MYSQL_DATABASE: go_tweets_db
+      MYSQL_PASSWORD: go_tweets_password
+    volumes:
+      - /Users/scriptertoufiq/Herd/db-go-tweets:/var/lib/mysql
