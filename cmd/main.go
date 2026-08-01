@@ -8,6 +8,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	userHandlerAlias "go-tweets/internal/handler/user"
+	userRepoAlias "go-tweets/internal/repository/user"
+	userServiceAlias "go-tweets/internal/service/user"
 )
 
 func main() {
@@ -18,7 +22,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	_, err= internalsql.ConnectMySQL(cfg)
+	db, err := internalsql.ConnectMySQL(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,6 +35,11 @@ func main() {
 			"message": "it's working",
 		})
 	})
+
+	userRepo := userRepoAlias.NewRepository(db)
+	userService := userServiceAlias.NewService(cfg, userRepo)
+	handler := userHandlerAlias.NewHandler(r, userService)
+	handler.RouteList()
 
 	server := fmt.Sprintf("127.0.0.1:%s", cfg.Port)
 
