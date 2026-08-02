@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 )
 
-func GenerateRefreshToken(userID string) (string, error) {
+func GenerateRefreshToken() (string, error) {
 	b := make([]byte, 32)
 	_, err := rand.Read(b)
 	if err != nil {

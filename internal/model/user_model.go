@@ -15,7 +15,7 @@ type (
 
 	RefreshTokenModel struct {
 		ID        int
-		UserID    int
+		UserID    int64
 		Token     string
 		ExpiresAt time.Time
 		CreatedAt time.Time

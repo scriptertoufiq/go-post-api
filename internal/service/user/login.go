@@ -30,7 +30,7 @@ func (s *userService) Login(ctx context.Context, req *dto.LoginUserRequest) (str
 	}
 
 	//get refresh token if exists otherwise generate new refresh token
-	token, err := jwt.CreateToken(int64(userExists.ID), userExists.Username, s.cfg.SecretKey)
+	token, err := jwt.CreateToken(int64(userExists.ID), userExists.Username, s.cfg.SecretJWT)
 	if err != nil {
 		return "", "", http.StatusInternalServerError, err
 	}
