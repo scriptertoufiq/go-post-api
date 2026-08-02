@@ -40,7 +40,7 @@ func main() {
 
 	userRepo := userRepoAlias.NewRepository(db)
 	userService := userServiceAlias.NewService(cfg, userRepo)
-	handler := userHandlerAlias.NewHandler(r, userService)
+	handler := userHandlerAlias.NewHandler(r, validate, userService)
 	handler.RouteList()
 
 	server := fmt.Sprintf("127.0.0.1:%s", cfg.Port)
