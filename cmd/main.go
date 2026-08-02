@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 
 	userHandlerAlias "go-tweets/internal/handler/user"
 	userRepoAlias "go-tweets/internal/repository/user"
@@ -16,6 +17,7 @@ import (
 
 func main() {
 	r := gin.Default()
+	validate := validator.New()
 	cfg, err := config.LoadConfig()
 
 	if err != nil {
