@@ -13,3 +13,15 @@ type (
 		ID string `json:"user_id"`
 	}
 )
+
+type (
+	LoginUserRequest struct {
+		Email    string `json:"email" validate:"required,email"`
+		Password string `json:"password" validate:"required"`
+	}
+
+	LoginUserResponse struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refresh_token"`
+	}
+)
