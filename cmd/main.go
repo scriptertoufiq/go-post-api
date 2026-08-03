@@ -10,8 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 
+	postHandlerAlias "go-tweets/internal/handler/post"
 	userHandlerAlias "go-tweets/internal/handler/user"
+	postRepoAlias "go-tweets/internal/repository/post"
 	userRepoAlias "go-tweets/internal/repository/user"
+	postServiceAlias "go-tweets/internal/service/post"
 	userServiceAlias "go-tweets/internal/service/user"
 )
 
@@ -39,9 +42,16 @@ func main() {
 	})
 
 	userRepo := userRepoAlias.NewRepository(db)
+	postRepo := postRepoAlias.NewRepository(db)
+
 	userService := userServiceAlias.NewService(cfg, userRepo)
-	handler := userHandlerAlias.NewHandler(r, validate, userService)
-	handler.RouteList()
+	postService := postServiceAlias.NewPostService(cfg, postRepo)
+
+	userHandler := userHandlerAlias.NewHandler(r, validate, userService)
+	userHandler.RouteList()
+
+	postHandler := postHandlerAlias.NewHandler(r, validate, postService)
+	postHandler.RouteList()
 
 	server := fmt.Sprintf("127.0.0.1:%s", cfg.Port)
 
