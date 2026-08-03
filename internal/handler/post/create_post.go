@@ -11,7 +11,7 @@ func (h *Handler) CreatePost(c *gin.Context) {
 
 	ctx := c.Request.Context()
 
-	var req dto.LoginUserRequest
+	var req dto.CreatePostRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -36,7 +36,7 @@ func (h *Handler) CreatePost(c *gin.Context) {
 		return
 	}
 
-	c.JSON(statusCode, dto.LoginUserResponse{
-		Id: postId,
+	c.JSON(statusCode, dto.CreatePostResponse{
+		ID: postId,
 	})
 }

@@ -8,15 +8,17 @@ import (
 	"time"
 )
 
-func (s *postService) CreatePost(ctx context.Context, req *dto.CreatePostRequest) (int64, int, error) {
+func (s *postService) CreatePost(ctx context.Context, req *dto.CreatePostRequest, userID int64) (int64, int, error) {
 	now := time.Now()
 	insertedId, err := s.postRepo.StorePost(ctx, &model.PostModel{
-		UserID:    req.UserID,
+		UserID:    userID,
+		Title:     req.Title,
 		Content:   req.Content,
 		CreatedAt: now,
+		UpdatedAt: now,
 	})
 	if err != nil {
-		return 0, 0, err
+		return 0, http.StatusInternalServerError, err
 	}
 	return insertedId, http.StatusCreated, nil
 }

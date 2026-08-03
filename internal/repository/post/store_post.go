@@ -6,11 +6,16 @@ import (
 )
 
 func (r *postRepository) StorePost(ctx context.Context, post *model.PostModel) (int64, error) {
-	query := `INSERT INTO posts (user_id, content, created_at) VALUES ($1, $2, $3) RETURNING id`
-	var postID int64
-	err := r.db.QueryRowContext(ctx, query, post.UserID, post.Content, post.CreatedAt).Scan(&postID)
+	query := `INSERT INTO posts (user_id, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`
+	result, err := r.db.ExecContext(ctx, query, post.UserID, post.Title, post.Content, post.CreatedAt, post.UpdatedAt)
 	if err != nil {
 		return 0, err
 	}
+
+	postID, err := result.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
 	return postID, nil
 }

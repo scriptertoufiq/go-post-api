@@ -50,7 +50,7 @@ func main() {
 	userHandler := userHandlerAlias.NewHandler(r, validate, userService)
 	userHandler.RouteList()
 
-	postHandler := postHandlerAlias.NewHandler(r, validate, postService)
+	postHandler := postHandlerAlias.NewHandler(r, validate, postService, cfg.SecretJWT)
 	postHandler.RouteList()
 
 	server := fmt.Sprintf("127.0.0.1:%s", cfg.Port)

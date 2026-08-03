@@ -8,7 +8,7 @@ import (
 )
 
 type PostService interface {
-	CreatePost(ctx context.Context, req *dto.CreatePostRequest) error
+	CreatePost(ctx context.Context, req *dto.CreatePostRequest, userID int64) (int64, int, error)
 }
 
 type postService struct {
